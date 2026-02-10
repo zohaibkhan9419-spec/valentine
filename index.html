@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Proposal</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #ffe6f0, #ffffff);
+            color: #d63384;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            text-align: center;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        button {
+            background: #ff69b4;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background: #ff1493;
+            transform: scale(1.05);
+        }
+        .gif {
+            width: 150px;
+            height: 150px;
+            margin: 20px auto;
+            display: block;
+        }
+        .gift-card {
+            background: #ffb6c1;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .gift-card:hover {
+            transform: scale(1.05);
+        }
+        .quiz-option {
+            display: block;
+            margin: 10px auto;
+            width: 80%;
+        }
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .photo {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: opacity 0.3s ease;
+        }
+        .photo:hover {
+            opacity: 0.8;
+        }
+.letter-card {
+  position: relative;
+
+  width: 90%;
+  max-width: 350px;
+  min-height: 300px;
+
+  margin: 0 auto;
+
+  padding: 25px 20px;
+
+  background: linear-gradient(to bottom, #fffdf5, #fff8e7);
+
+  border-radius: 12px;
+
+  border: 1px solid #f0d9b5;
+
+  font-family: "Georgia", serif;
+
+  box-shadow:
+    0 12px 25px rgba(0,0,0,0.18),
+    inset 0 0 12px rgba(255,220,180,0.4);
+
+  transform-origin: top;
+}
+
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255, 182, 193, 0.5), rgba(255, 255, 255, 0.5));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        .hidden {
+            display: none;
+        }
+        /* Mobile-first responsive */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            button { padding: 12px 25px; font-size: 1rem; }
+        }
+
+#letterText {
+  color: #5a2a2a;
+  line-height: 1.7;
+  font-size: 1rem;
+  white-space: normal;
+}
+.envelope {
+  width: 340px;
+
+  position: relative;
+  z-index: 1;   /* BASE */
+
+  perspective: 1200px;
+}
+.envelope-body {
+  width: 100%;
+  min-height: 100%;
+
+  background: linear-gradient(to bottom, #fff7e6, #fff1d6);
+  border-radius: 8px;
+
+  position: relative;
+  z-index: 2;          /* IMPORTANT */
+
+  overflow: hidden;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+
+/* Flap */
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 50%;
+
+  background: #eac39a;
+
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+
+  transform-origin: top center;
+
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  z-index: 5;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+
+}
+
+
+/* Closed State */
+.envelope.closed .envelope-flap {
+  transform: rotateX(0deg);
+}
+
+/* Open State */
+.envelope.open .envelope-flap {
+  transform: rotateX(-110deg);
+}
+
+
+/* Letter Hidden Initially */
+.envelope .letter-card {
+  position: absolute;
+
+  bottom: -160px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 90%;
+  max-height: 260px;   /* IMPORTANT */
+
+  overflow: hidden;   /* IMPORTANT */
+
+  z-index: 3;
+}
+
+
+#letterText {
+  font-size: 1.05rem;
+  padding: 10px 5px;
+}
+
+.envelope.open .envelope-body {
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+/* Center letter ONLY when visible */
+#letter:not(.hidden) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+#backToGiftsLetter {
+  display: block;
+  margin: 25px auto 0 auto; /* centers horizontally */
+  text-align: center;
+}
+/* Envelope Pocket */
+.envelope-pocket {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  height: 65%;
+
+  background: #f1cfa5;
+
+  border-radius: 0 0 8px 8px;
+
+  z-index: 4;   /* ABOVE LETTER */
+}
+
+/* After opening, allow letter to overflow */
+.envelope.open .envelope-body {
+  overflow: visible;
+}
+#letter {
+  overflow: hidden;
+}
+
+/* Envelope goes down after letter comes out */
+.envelope.open {
+  animation: envelopeDrop 1s ease forwards;
+  animation-delay: 2.2s;
+}
+
+@keyframes envelopeDrop {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(35px);
+  }
+}
+
+/* ================= REALISTIC LETTER FLOW ================= */
+
+/* First stage: small rise */
+.envelope.open .letter-card {
+  animation: letterStage1 1s ease-out forwards,
+             letterStage2 1.2s ease-in-out forwards;
+  animation-delay: 0.8s, 2s;
+}
+
+/* Envelope drop */
+.envelope.open {
+  animation: envelopeDrop 1s ease forwards;
+  animation-delay: 2s;
+}
+
+/* Stage 1: letter comes out a little */
+@keyframes letterStage1 {
+  from {
+    transform: translate(-50%, 0) scale(0.95);
+  }
+  to {
+    transform: translate(-50%, -60px) scale(1);
+  }
+}
+
+/* Stage 2: letter fully out */
+@keyframes letterStage2 {
+  from {
+    transform: translate(-50%, -60px) scale(1);
+  }
+  to {
+    transform: translate(-50%, -180px) scale(1);
+  }
+}
+
+/* Envelope goes down */
+@keyframes envelopeDrop {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(45px);
+  }
+}
+.envelope-stage {
+  position: relative;
+
+  width: 100%;
+  height: 420px;      /* IMPORTANT: fixed */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;  /* IMPORTANT */
+
+  margin-top: 30px;
+}
+#letterFrame {
+  width: 100%;
+  max-width: 400px;
+  height: 750px;
+
+  border: none;
+
+  display: block;
+  margin: 0 auto;
+}
+.quiz-gif {
+  width: 160px;
+  height: auto;
+
+  margin: 15px auto;
+
+  display: block;
+
+  border-radius: 10px;
+}
+.quiz-success-text {
+  font-size: 1.4rem;        /* Bigger text */
+  font-weight: 700;        /* Bold */
+  color: #d63384;          /* Romantic pink */
+
+  margin-bottom: 15px;
+
+  font-family: 'Poppins', 'Arial', sans-serif;
+
+  letter-spacing: 0.5px;
+}
+/* Memory Photo Grid */
+
+.memory-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin: 25px 0;
+}
+
+.memory-card {
+  background: #fffbe8;
+  padding: 12px 12px 18px;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.memory-card:hover {
+  transform: scale(1.05);
+}
+
+.memory-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.memory-card p {
+  margin-top: 8px;
+  font-family: "Georgia", serif;
+  font-size: 0.95rem;
+  color: #5a2a2a;
+  font-weight: 600;
+}
+
+.rotate1 { transform: rotate(-2deg); }
+.rotate2 { transform: rotate(2deg); }
+.rotate3 { transform: rotate(1deg); }
+.rotate4 { transform: rotate(-1deg); }
+
+
+
+    </style>
+</head>
+<body>
+    <!-- Page 1: Main Question -->
+    <section id="page1" class="container">
+        <img 
+        src="gifs/loveyou.gif" 
+        alt="Cute Teddy" 
+        class="gif"
+        id="mainGif"
+>
+
+        <h1 id="heading">Will you be my friend? 🥺❤️</h1>
+        <p>Life is an incredible journey, and I want to spend every single second of it with you.</p>
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
+    </section>
+
+    <!-- Page 2: Valentine Message -->
+    <section id="page2" class="container hidden">
+
+  <img src="gifs/page2.gif" class="gif" id="page2Gif">
+
+  <h1>Happy Valentine’s Day, baby 💍</h1>
+
+  <p>
+    Every second with you is a celebration.
+    You are the spark that makes my world so much brighter.
+  </p>
+
+  <button id="giftsBtn">See my gifts 🎁</button>
+
+</section>
+
+
+    <!-- Page 3: Gifts Page -->
+    <section id="page3" class="container hidden">
+        <h1>Something for you 💕</h1>
+        <!-- Quiz -->
+<div class="gift-card" id="gift1">
+  <img src="gifs/quiz.gif" alt="Quiz" class="gif">
+  <p>Gift One – Quiz</p>
+</div>
+
+<!-- Letter -->
+<div class="gift-card" id="gift2">
+  <img src="gifs/letter.gif" alt="Letter" class="gif">
+  <p>Gift Two – Letter</p>
+</div>
+
+<!-- Photos -->
+<div class="gift-card" id="gift3">
+  <img src="gifs/photo.gif" alt="Photos" class="gif">
+  <p>Gift Three – Photos</p>
+</div>
+
+    </section>
+
+    <!-- Gift One: Quiz -->
+    <section id="quiz" class="container hidden">
+
+  <h1>Quiz Time! 🧠</h1>
+
+  <div id="question1">
+    <p>Who is the absolute boss in this relationship?</p>
+    <button class="quiz-option" data-correct="false">Me</button>
+    <button class="quiz-option" data-correct="true">You</button>
+  </div>
+
+  <div id="question2" class="hidden">
+    <p>Who fights a lot in this relationship?</p>
+    <button class="quiz-option" data-correct="false">Always you</button>
+    <button class="quiz-option" data-correct="true">Me</button>
+    <button class="quiz-option" data-correct="false">No one</button>
+  </div>
+
+  <div id="question3" class="hidden">
+    <p>Where do I plan to spend the rest of my life?</p>
+    <button class="quiz-option" data-correct="false">Paris</button>
+    <button class="quiz-option" data-correct="true">In your heart ❤️</button>
+    <button class="quiz-option" data-correct="false">On Mars</button>
+  </div> <!-- ✅ CLOSED -->
+
+  <div id="quizResult" class="hidden">
+
+    <p class="quiz-success-text">
+  Yeahhh! You passed the test 🥰 You really love me..!!
+</p>
+
+    <!-- Celebration GIF -->
+    <img 
+      src="gifs/flower.gif" 
+      alt="Flower Celebration"
+      class="quiz-gif"
+    >
+
+    <button id="backToGifts">Back to Gifts</button>
+
+  </div>
+
+</section>
+
+    <section id="letter" class="container hidden">
+
+<iframe
+  src="love letter 2.html"
+  id="letterFrame"
+  frameborder="0"
+  scrolling="no">
+</iframe>
+</section>
+
+<!-- Gift Three: Photos -->
+<section id="photos" class="container hidden">
+
+  <h1>Look at this cutie 😭💖</h1>
+
+  <div class="memory-grid">
+
+    <div class="memory-card rotate1">
+      <img src="images/Photo1.jpeg" alt="Sweet Hello">
+      <p>Sweet Hello</p>
+    </div>
+
+    <div class="memory-card rotate2">
+      <img src="images/Photo2.jpeg" alt="True Smile">
+      <p>True Smile</p>
+    </div>
+
+    <div class="memory-card rotate3">
+      <img src="images/Photo3.jpeg" alt="Only Us">
+      <p>Only Us</p>
+    </div>
+
+    <div class="memory-card rotate4">
+      <img src="images/Photo4.jpeg" alt="My Home">
+      <p>My Home</p>
+    </div>
+
+  </div>
+
+  <button id="backToGiftsPhotos">Back to Gifts</button>
+
+</section>
+
+
+    <!-- Final Page: Ending -->
+    <section id="ending" class="hidden">
+        <div class="video-container">
+            <video autoplay loop muted>
+                <source src="C:\Users\Mohammad zuhaib\Downloads\WhatsApp Video 2026-02-10 at 8.50.25 PM.mp4" type="video/mp4"> <!-- Replace with actual video path -->
+                Your browser does not support the video tag.
+            </video>
+            <div class="overlay">
+                <h1>You are my forever ❤️</h1>
+                <p>Thank you for saying yes. Let's make more memories together.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+/* ================= LETTER ================= */
+
+/* ================= NAVIGATION ================= */
+
+const pages = ['page1', 'page2', 'page3', 'quiz', 'letter', 'photos', 'ending'];
+
+function showPage(pageId) {
+  pages.forEach(id => document.getElementById(id).classList.add('hidden'));
+  document.getElementById(pageId).classList.remove('hidden');
+}
+
+/* ================= PAGE 1 ================= */
+
+let noClickCount = 0;
+let yesScale = 1.0;
+let noScale = 1.0;
+
+const headings = [
+  "Will you be mine? 🥺❤️",
+  "Are you sure? 😳",
+  "Think again… are you really sure? 🥺",
+  "Please please please 🥹",
+  "Don’t break my heart 💔",
+  "i think you are not in the mood",
+  "okay tell me pain theek hua?",
+  "IS IT BECAUSE OF YOUR MOOD SWINGS",
+  "hahahaha you can't click NO 🥺❤️"
+];
+
+const gifs = [
+  "gifs/loveyou.gif",
+  "gifs/seriously.gif",
+  "gifs/crying.gif",
+  "gifs/please.gif"
+];
+
+let gifIndex = 0;
+
+document.getElementById('noBtn').addEventListener('click', () => {
+
+  noClickCount = (noClickCount + 1) % headings.length;
+  document.getElementById('heading').textContent = headings[noClickCount];
+
+  gifIndex = (gifIndex + 1) % gifs.length;
+  document.getElementById("mainGif").src = gifs[gifIndex];
+
+  yesScale += 0.4;
+  document.getElementById('yesBtn').style.transform = `scale(${yesScale})`;
+
+  noScale = Math.max(0.5, noScale - 0.1);
+  document.getElementById('noBtn').style.transform = `scale(${noScale})`;
+
+  const btn = document.getElementById('noBtn');
+  btn.style.position = 'absolute';
+  btn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+  btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+});
+
+document.getElementById('yesBtn').addEventListener('click', () => showPage('page2'));
+document.getElementById('giftsBtn').addEventListener('click', () => showPage('page3'));
+
+/* ================= GIFTS ================= */
+
+document.getElementById('gift1').addEventListener('click', () => showPage('quiz'));
+
+document.getElementById('gift2').addEventListener('click', () => {
+  showPage('letter');
+});
+
+
+document.getElementById('gift3').addEventListener('click', () => showPage('photos'));
+
+/* ================= QUIZ ================= */
+
+let currentQuestion = 1;
+
+document.querySelectorAll('.quiz-option').forEach(btn => {
+
+  btn.addEventListener('click', (e) => {
+
+    const isCorrect = e.target.dataset.correct === 'true';
+
+    if (!isCorrect) {
+      alert('Oops! Try again 😜');
+      return;
+    }
+
+    document.getElementById(`question${currentQuestion}`).classList.add('hidden');
+
+    currentQuestion++;
+
+    if (currentQuestion <= 3) {
+      document.getElementById(`question${currentQuestion}`).classList.remove('hidden');
+    } else {
+      document.getElementById('quizResult').classList.remove('hidden');
+    }
+
+  });
+
+});
+
+document.getElementById('backToGifts').addEventListener('click', () => showPage('page3'));
+document.getElementById('backToGiftsPhotos').addEventListener('click', () => showPage('page3'));
+
+  window.addEventListener("message", (e) => {
+
+  if (e.data === "goBackToGifts") {
+    showPage("page3"); // Gifts page
+  }
+
+});
+
+
+</script>
+
+</body>
+</html>
